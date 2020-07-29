@@ -1,3 +1,4 @@
+// map object
 var map = L.map('map', {
     center:[-0.4217681939995159, 36.97191238403321],
     zoom:12
@@ -41,25 +42,53 @@ fetch('nyeri.geojson')
         nyeri.addData(features);
         nyeri.bringToFront();
 
-        // get the buffer
-        createBuffer(2)
-            .then(data => data)
-            .then(data => {
-                console.log(data);
-                buffer.clearLayers();
-
-                buffer.addData(data);
-            })
-            .catch(error => {
-                alert(error.message);
-
-                console.log(error);
-            });
+        submitFunction();
     });
 
-// run geoprcessing
-function createBuffer(distance=10) {
-    console.log(distance);
+
+// listen to form submit event
+var form = document.getElementById('form');
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitFunction();
+});
+
+function submitFunction() {
+    var parameters =  {};
+    var elements = form.elements;
+
+    // get the form data
+    for (let i = 0; i < elements.length -1 ; i++) {
+        var item = elements[i];
+        parameters[item.name] = item.value;
+    }
+
+    console.log(parameters);
+    // call to createBuffer method
+
+    updateBuffer(parameters);
+}
+
+function updateBuffer(parameters) {
+    // get the buffer
+    createBuffer(parameters)
+    .then(data => data)
+    .then(data => {
+        console.log(data);
+        buffer.clearLayers();
+
+        buffer.addData(data);
+    })
+    .catch(error => {
+        alert(error.message);
+
+        console.log(error);
+    });
+}
+
+// run geoprocessing
+function createBuffer(parameters) {
+    console.log(parameters);
     return new Promise((resolve, reject) => {
         var features = nyeri.toGeoJSON();
         var feature = turf.featureCollection(features.features);
@@ -67,8 +96,8 @@ function createBuffer(distance=10) {
         try {
             var buffer =  turf.buffer(
                 feature,
-                distance,
-                {units:'kilometers'}
+                parameters.distance,
+                {units:parameters.units}
             );
             
             resolve(buffer);
@@ -79,5 +108,3 @@ function createBuffer(distance=10) {
        
     })
 }
-
-// listen to form submit event
