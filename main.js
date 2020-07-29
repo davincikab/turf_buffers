@@ -40,7 +40,7 @@ fetch('nyeri.geojson')
     .then(features => {
         nyeri.addData(features);
         nyeri.bringToFront();
-        
+
         // get the buffer
         createBuffer(2)
             .then(data => data)
@@ -59,6 +59,7 @@ fetch('nyeri.geojson')
 
 // run geoprcessing
 function createBuffer(distance=10) {
+    console.log(distance);
     return new Promise((resolve, reject) => {
         var features = nyeri.toGeoJSON();
         var feature = turf.featureCollection(features.features);
@@ -78,3 +79,5 @@ function createBuffer(distance=10) {
        
     })
 }
+
+// listen to form submit event

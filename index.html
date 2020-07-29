@@ -20,9 +20,78 @@
         width: 100vw;
         height:100vh;
     }
+
+    .form-input {
+        position: absolute;
+        z-index: 800;
+        top:8%;
+        right: 2%;
+        background-color: whitesmoke;
+        padding: 1em 1.5em;
+    }
+
+    .title {
+        margin:0;
+        font-size: 2em;
+    }
+    .form-control {
+        max-height: 25px;
+        padding:5px;
+        border-radius: 5px;
+        width: 100%;
+        border-width: 1px;
+        border-color: #ddd;
+    }
+
+    .form-control:focus {
+        outline: none;
+        box-shadow: 1px 1px 0.5em aquamarine;
+    }
+    .input-group + .input-group {
+        margin-top:1em;
+    }
+
+    .btn {
+        padding: 0.5em 1em;
+        background-color: #d6621e;
+        color:#fff;
+        border:none;
+        margin-top: 1em;
+    }
 </style>
 <body>
     <div id="map"></div>
+    <div class="form-input">
+        <form action="">
+            <h6 class="title">Variables</h6>
+            <!-- <div class="input-group">
+                <label for="distance">Rings</label>
+                <input type="number" name="rings" id="rings" class="form-control">
+            </div>
+
+            <div class="input-group">
+                <label for="distance">Intervals</label>
+                <input type="number" name="intervals" id="intervals" class="form-control">
+            </div> -->
+
+            <div class="input-group">
+                <label for="distance">Distance</label>
+                <input type="number" name="distance" id="distance" class="form-control" value="2">
+            </div>
+            
+            <div class="input-group">
+                <label for="units">Units</label>
+                <select name="units" id="units" class="form-control">
+                    <option value="miles" >Miles</option>
+                    <option value="kilometers" selected>Kilometers</option>
+                </select>
+            </div>
+
+            <button class="btn btn-success" type="submit">
+                Create Buffer
+            </button>
+        </form>
+    </div>
     <script src='https://unpkg.com/@turf/turf/turf.min.js'></script>
     <script src="main.js"></script>
 </body>
